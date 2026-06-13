@@ -17,7 +17,7 @@ Fecha de revisión: 2026-06-13
 | --- | --- | --- | --- |
 | Google Chrome | `google-chrome-stable` | `149.0.7827.114-1` | Instalado desde `.deb` o repositorio externo; actualmente solo aparece en `/var/lib/dpkg/status` |
 | curl | `curl` | `8.18.0-1ubuntu2.1` | Herramienta CLI HTTP |
-| Git | `git` | `1:2.53.0-1ubuntu1` | Control de versiones |
+| Git | `git` | `1:2.53.0-1ubuntu1` | Control de versiones; instalado antes de GitHub CLI |
 | GitHub CLI | `gh` | `2.46.0-4` | CLI de GitHub, disponible en repositorio Ubuntu `universe` |
 | Ubuntu restricted addons | `ubuntu-restricted-addons` | `32` | Códecs/complementos multimedia restringidos |
 
@@ -25,7 +25,7 @@ Fecha de revisión: 2026-06-13
 
 | Herramienta | Ruta detectada | Versión detectada | Notas |
 | --- | --- | --- | --- |
-| opencode | `~/.opencode/bin/opencode` | `1.17.4` | Instalado con `curl -fsSL https://opencode.ai/install \| bash` |
+| opencode | `~/.opencode/bin/opencode` | `1.17.4` | Instalado con `curl -fsSL https://opencode.ai/install \| bash`; requiere `curl` previamente |
 
 ## Notas
 

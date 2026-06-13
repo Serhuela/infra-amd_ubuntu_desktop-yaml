@@ -1,0 +1,44 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: es_ES.UTF-8
+  keyboard:
+    layout: es
+  timezone: Europe/Madrid
+
+  identity:
+    hostname: amd-desktop
+    username: usuario
+    # Sustituir por un hash real generado con: openssl passwd -6
+    password: "$6$OcY49zgtDZ/jz1hO$eZ62oStyz9TnoTqkYYeEQsKHA2olUs3Zxpoh9w4zBh0NpULEbHS14MM/no8Rvqx2/VOcMK5Lk9Q1tyHvU1Tia/"
+
+  ssh:
+    install-server: false
+
+  codecs:
+    install: true
+
+  drivers:
+    install: true
+
+  updates: security
+
+  packages:
+    - curl
+    - git
+    - gh
+    - ubuntu-restricted-addons
+
+  snaps:
+    - name: bitwarden
+      channel: latest/stable
+    - name: code
+      channel: latest/stable
+      classic: true
+
+  late-commands:
+    - curtin in-target --target=/target -- install -d -m 0755 /etc/apt/keyrings
+    - curtin in-target --target=/target -- sh -c "curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg"
+    - curtin in-target --target=/target -- sh -c "echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google-chrome.list"
+    - curtin in-target --target=/target -- apt-get update
+    - curtin in-target --target=/target -- apt-get install -y google-chrome-stable

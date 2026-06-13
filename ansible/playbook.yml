@@ -1,0 +1,75 @@
+---
+- name: Configurar Ubuntu Desktop local
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars:
+    local_home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+
+    apt_packages:
+      - curl
+      - git
+      - gh
+      - ubuntu-restricted-addons
+
+    snap_packages:
+      - bitwarden
+
+  tasks:
+    - name: Instalar paquetes APT base
+      ansible.builtin.apt:
+        name: "{{ apt_packages }}"
+        state: present
+        update_cache: true
+
+    - name: Crear directorio de keyrings APT
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Descargar clave de firma de Google Chrome
+      ansible.builtin.get_url:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+        dest: /etc/apt/keyrings/google-chrome.asc
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Configurar repositorio de Google Chrome
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.asc] https://dl.google.com/linux/chrome/deb/ stable main
+        filename: google-chrome
+        state: present
+        update_cache: true
+
+    - name: Instalar Google Chrome
+      ansible.builtin.apt:
+        name: google-chrome-stable
+        state: present
+
+    - name: Instalar snaps base
+      community.general.snap:
+        name: "{{ snap_packages }}"
+        state: present
+
+    - name: Instalar Visual Studio Code snap classic
+      community.general.snap:
+        name: code
+        classic: true
+        state: present
+
+    - name: Comprobar si opencode ya esta instalado
+      ansible.builtin.stat:
+        path: "{{ local_home }}/.opencode/bin/opencode"
+      become: false
+      register: opencode_binary
+
+    - name: Instalar opencode
+      ansible.builtin.shell: curl -fsSL https://opencode.ai/install | bash
+      become: false
+      changed_when: true
+      when: not opencode_binary.stat.exists

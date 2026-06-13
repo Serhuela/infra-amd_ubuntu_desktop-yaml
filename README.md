@@ -2,10 +2,11 @@
 
 Repositorio IaC para la instalación de Ubuntu Desktop en mi AMD Ryzen 7900X.
 
-## Instalación reproducible
+## Contenido
 
 - [`autoinstall.example.yaml`](autoinstall.example.yaml): plantilla para instalar Ubuntu Desktop de forma repetible con `autoinstall`/Subiquity.
-- Antes de usarla, sustituir `identity.username`, `identity.hostname` y `identity.password` por valores reales. La contraseña debe ser un hash SHA-512 generado, por ejemplo, con `openssl passwd -6`.
+- [`ansible/`](ansible/): configuración aplicable sobre la máquina ya instalada.
+- [`ops/`](ops/): procedimientos operativos para usar este repositorio.
 
 ## Documentación
 

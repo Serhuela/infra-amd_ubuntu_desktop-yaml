@@ -4,5 +4,6 @@ Configuración Ansible para aplicar el estado deseado sobre la propia máquina U
 
 ## Contenido
 
-- [`playbook.yml`](playbook.yml): instala software base, Google Chrome, snaps y opencode en `localhost`.
+- [`playbook.yml`](playbook.yml): instala software base, Google Chrome, snaps base y opencode en `localhost`.
+- [`vscode.yml`](vscode.yml): instala Visual Studio Code (`code`) mediante Snap con confinamiento `classic` en `localhost`.
 - [`requirements.yml`](requirements.yml): colecciones Ansible necesarias para ejecutar el playbook.

@@ -1,0 +1,12 @@
+---
+- name: Instalar Visual Studio Code localmente
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Instalar Visual Studio Code snap classic
+      community.general.snap:
+        name: code
+        classic: true
+        state: present

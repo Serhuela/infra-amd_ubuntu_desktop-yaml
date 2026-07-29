@@ -56,12 +56,6 @@
         name: "{{ snap_packages }}"
         state: present
 
-    - name: Instalar Visual Studio Code snap classic
-      community.general.snap:
-        name: code
-        classic: true
-        state: present
-
     - name: Comprobar si opencode ya esta instalado
       ansible.builtin.stat:
         path: "{{ local_home }}/.opencode/bin/opencode"

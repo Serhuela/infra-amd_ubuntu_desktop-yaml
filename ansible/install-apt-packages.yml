@@ -1,0 +1,24 @@
+---
+- name: Instalar paquetes APT locales
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars:
+    apt_packages:
+      - ansible
+      - curl
+      - git
+      - gh
+      - ubuntu-restricted-addons
+
+  tasks:
+    - name: Actualizar paquetes APT instalados
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: safe
+
+    - name: Instalar paquetes APT
+      ansible.builtin.apt:
+        name: "{{ apt_packages }}"
+        state: present

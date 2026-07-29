@@ -10,6 +10,12 @@
         name: bitwarden
         state: present
 
+    - name: Instalar Termius snap
+      community.general.snap:
+        name: termius-app
+        channel: latest/stable
+        state: present
+
     - name: Instalar Visual Studio Code snap classic
       community.general.snap:
         name: code

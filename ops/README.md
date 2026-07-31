@@ -21,6 +21,10 @@ ansible-playbook -i localhost, -c local ansible/configure-ghostty.yml
 ```
 
 ```bash
+ansible-playbook -i localhost, -c local ansible/configure-gnome-clock.yml
+```
+
+```bash
 ansible-playbook -i localhost, -c local ansible/install-snap-packages.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
 ```
 
@@ -39,3 +43,5 @@ Se indica `/usr/bin/sudo.ws` porque Ansible 2.20 no reconoce correctamente el pr
 `install-snap-packages.yml` instala también el componente opcional `opencode+desktop`, necesario para abrir OpenCode Desktop desde App Center.
 
 `configure-ghostty.yml` añade solo el bloque gestionado por Ansible a `~/.config/ghostty/config`: copia al seleccionar y pega texto con el clic derecho. `wl-clipboard`, instalado por el playbook APT, permite a OpenCode leer imágenes del portapapeles en Wayland mediante `Ctrl+V`.
+
+`configure-gnome-clock.yml` muestra día, fecha y segundos en el reloj de GNOME. Con la configuración regional actual en inglés y formato de 24 horas, se verá como `Fri 31 Jul 09:25:30`.

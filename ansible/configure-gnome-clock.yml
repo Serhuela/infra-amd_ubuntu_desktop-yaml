@@ -1,0 +1,21 @@
+---
+- name: Configurar reloj de GNOME
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Mostrar reloj de GNOME en formato de 24 horas
+      community.general.dconf:
+        key: /org/gnome/desktop/interface/clock-format
+        value: "'24h'"
+      become: false
+
+    - name: Mostrar dia, fecha y segundos en el reloj de GNOME
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/{{ item }}"
+        value: true
+      loop:
+        - clock-show-weekday
+        - clock-show-date
+        - clock-show-seconds
+      become: false

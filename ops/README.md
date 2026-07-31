@@ -44,4 +44,4 @@ Se indica `/usr/bin/sudo.ws` porque Ansible 2.20 no reconoce correctamente el pr
 
 `configure-ghostty.yml` añade solo el bloque gestionado por Ansible a `~/.config/ghostty/config`: copia al seleccionar y pega texto con el clic derecho. `wl-clipboard`, instalado por el playbook APT, permite a OpenCode leer imágenes del portapapeles en Wayland mediante `Ctrl+V`.
 
-`configure-gnome-clock.yml` muestra día, fecha y segundos en el reloj de GNOME. Con la configuración regional actual en inglés y formato de 24 horas, se verá como `Fri 31 Jul 09:25:30`.
+`configure-gnome-clock.yml` muestra día, fecha y segundos en el reloj de GNOME. Con la configuración regional actual en inglés y formato de 24 horas, se verá como `Fri Jul 31 09:25:30`.

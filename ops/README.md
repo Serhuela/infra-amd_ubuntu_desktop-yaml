@@ -13,7 +13,15 @@ ansible-galaxy collection install -r ansible/requirements.yml
 Ejecutar los playbooks en este orden:
 
 ```bash
+ansible-playbook -i localhost, -c local ansible/configure-apt-repositories.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
+```
+
+```bash
 ansible-playbook -i localhost, -c local ansible/install-apt-packages.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
+```
+
+```bash
+ansible-playbook -i localhost, -c local ansible/configure-ssh.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
 ```
 
 ```bash
@@ -37,14 +45,14 @@ ansible-playbook -i localhost, -c local ansible/install-snap-packages.yml -K -e 
 ```
 
 ```bash
-ansible-playbook -i localhost, -c local ansible/install-google-chrome.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
-```
-
-```bash
 ansible-playbook -i localhost, -c local ansible/install-antigravity-ide.yml -K -e ansible_become_exe=/usr/bin/sudo.ws
 ```
 
 Se indica `/usr/bin/sudo.ws` porque Ansible 2.20 no reconoce correctamente el prompt de contraseña de `sudo-rs`, usado por defecto en este sistema. Esta opción usa el sudo clásico solo durante la ejecución del playbook, sin cambiar la configuración global.
+
+`configure-apt-repositories.yml` debe ejecutarse antes de `install-apt-packages.yml`. Configura las fuentes oficiales de Google Chrome y Brave; el segundo playbook actualiza la caché APT e instala ambos navegadores junto con el resto de paquetes.
+
+`configure-ssh.yml` debe ejecutarse después de `install-apt-packages.yml`. Instala todas las claves públicas de `rsc/authorized_keys/*.pub` para el usuario local, habilita OpenSSH y rechaza la autenticación por contraseña y el acceso de `root`. Para autorizar otro equipo, añadir su clave pública a esa carpeta y volver a ejecutar el playbook. La conexión se realiza con `ssh serhuela@192.168.1.4`.
 
 `install-antigravity-ide.yml` descarga la versión declarada del archivo oficial de Google para Linux x64. Para actualizarla, cambiar juntos `antigravity_ide_version` y `antigravity_ide_build` por los valores publicados en [la página oficial de descarga](https://antigravity.google/download#antigravity-ide). No sustituirlo por el snap `antigravity`: instala Antigravity 2.0, no Google Antigravity IDE.
 

@@ -1,0 +1,74 @@
+---
+- name: Configurar OpenSSH localmente
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars:
+    local_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    ssh_public_key_files: "{{ query('ansible.builtin.fileglob', playbook_dir + '/../rsc/authorized_keys/*.pub') }}"
+
+  tasks:
+    - name: Comprobar que existe al menos una clave publica autorizada
+      ansible.builtin.assert:
+        that: ssh_public_key_files | length > 0
+        fail_msg: Añade al menos una clave publica en rsc/authorized_keys antes de configurar OpenSSH.
+
+    - name: Crear el directorio SSH del usuario local
+      ansible.builtin.file:
+        path: "/home/{{ local_user }}/.ssh"
+        state: directory
+        owner: "{{ local_user }}"
+        group: "{{ local_user }}"
+        mode: "0700"
+
+    - name: Autorizar las claves SSH versionadas
+      ansible.posix.authorized_key:
+        user: "{{ local_user }}"
+        key: "{{ lookup('ansible.builtin.file', item) }}"
+        state: present
+        manage_dir: false
+      loop: "{{ ssh_public_key_files }}"
+      loop_control:
+        label: "{{ item | basename }}"
+
+    - name: Proteger las claves SSH autorizadas
+      ansible.builtin.file:
+        path: "/home/{{ local_user }}/.ssh/authorized_keys"
+        state: file
+        owner: "{{ local_user }}"
+        group: "{{ local_user }}"
+        mode: "0600"
+
+    - name: Configurar autenticacion de OpenSSH
+      ansible.builtin.copy:
+        dest: /etc/ssh/sshd_config.d/99-local-network.conf
+        owner: root
+        group: root
+        mode: "0644"
+        validate: /usr/sbin/sshd -t -f %s
+        content: |
+          # Managed by Ansible.
+          PermitRootLogin no
+          PasswordAuthentication no
+          KbdInteractiveAuthentication no
+          PubkeyAuthentication yes
+          AllowUsers {{ local_user }}
+      notify: Recargar OpenSSH
+
+    - name: Validar la configuracion efectiva de OpenSSH
+      ansible.builtin.command:
+        cmd: /usr/sbin/sshd -t
+      changed_when: false
+
+    - name: Habilitar e iniciar el servicio OpenSSH
+      ansible.builtin.systemd_service:
+        name: ssh
+        enabled: true
+        state: started
+
+  handlers:
+    - name: Recargar OpenSSH
+      ansible.builtin.systemd_service:
+        name: ssh
+        state: reloaded

@@ -1,5 +1,5 @@
 ---
-- name: Instalar Google Chrome localmente
+- name: Configurar repositorios APT externos locales
   hosts: localhost
   connection: local
   become: true
@@ -26,9 +26,20 @@
         repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.asc] https://dl.google.com/linux/chrome/deb/ stable main
         filename: google-chrome
         state: present
-        update_cache: true
+        update_cache: false
 
-    - name: Instalar Google Chrome
-      ansible.builtin.apt:
-        name: google-chrome-stable
-        state: present
+    - name: Descargar clave de firma de Brave
+      ansible.builtin.get_url:
+        url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+        dest: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Configurar repositorio de Brave
+      ansible.builtin.get_url:
+        url: https://brave-browser-apt-release.s3.brave.com/brave-browser.sources
+        dest: /etc/apt/sources.list.d/brave-browser-release.sources
+        owner: root
+        group: root
+        mode: "0644"

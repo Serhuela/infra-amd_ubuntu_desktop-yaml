@@ -7,14 +7,17 @@
   vars:
     apt_packages:
       - ansible
+      - brave-browser
       - curl
       - git
       - gh
+      - google-chrome-stable
       - ghostty
       - docker.io
       - docker-buildx
       - docker-compose-v2
       - make
+      - openssh-server
       - build-essential
       - libssl-dev
       - zlib1g-dev

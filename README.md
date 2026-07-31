@@ -11,4 +11,5 @@ Repositorio IaC para la instalación de Ubuntu Desktop en mi AMD Ryzen 7900X.
 ## Documentación
 
 - [Software instalado manualmente](SOFTWARE.md)
-- [Configuración manual realizada](CONFIGURACION.md)
+- [Configuración aplicada](CONFIGURACION.md)
+- [Configuración manual realizada](CONFIGURACION_MANUAL.md)

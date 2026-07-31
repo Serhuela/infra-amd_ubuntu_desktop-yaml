@@ -27,6 +27,7 @@ Fecha de revisión: 2026-07-31
 | Ghostty | `ghostty` | `1.3.0~us1-0ubuntu1` | Terminal que permite copiar y pegar texto a mi estilo y dentro de opencode |
 | OpenSSH Server | `openssh-server` | `1:10.2p1-2ubuntu3.5` | Acceso SSH mediante claves públicas autorizadas |
 | pyenv | `pyenv` | `2.6.8-1` | Gestor de versiones de Python |
+| Solaar | `solaar` | `1.1.19-1` | Configuración del ratón Logitech MX Master 3S |
 | Ubuntu restricted addons | `ubuntu-restricted-addons` | `32` | Códecs/complementos multimedia restringidos |
 | wl-clipboard | `wl-clipboard` | `2.2.1-2build1` | Portapapeles Wayland para OpenCode |
 

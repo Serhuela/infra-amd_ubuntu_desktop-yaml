@@ -5,7 +5,7 @@ Configuración Ansible para aplicar el estado deseado sobre la propia máquina U
 ## Contenido
 
 - [`configure-apt-repositories.yml`](configure-apt-repositories.yml): configura los keyrings y repositorios APT oficiales de Google Chrome y Brave.
-- [`install-apt-packages.yml`](install-apt-packages.yml): actualiza los paquetes APT instalados e instala herramientas base, OpenSSH, `pyenv` con sus dependencias de compilación, Docker con Buildx y Compose, Google Chrome y Brave.
+- [`install-apt-packages.yml`](install-apt-packages.yml): actualiza los paquetes APT instalados e instala herramientas base, OpenSSH, `pyenv` con sus dependencias de compilación, Docker con Buildx y Compose, Solaar para el Logitech MX Master 3S, Google Chrome y Brave.
 - [`install-snap-packages.yml`](install-snap-packages.yml): instala Bitwarden, Termius (`termius-app`), OpenCode (`opencode`) con su componente de escritorio y Visual Studio Code (`code`). OpenCode y Visual Studio Code usan confinamiento `classic`.
 - [`install-antigravity-ide.yml`](install-antigravity-ide.yml): instala o actualiza Google Antigravity IDE para Linux x64 desde su archivo oficial; crea el comando `antigravity-ide` y su lanzador de escritorio. No usa el snap `antigravity`, que corresponde a Antigravity 2.0 y no al IDE.
 - [`configure-development-tools.yml`](configure-development-tools.yml): instala `tfenv` en el directorio personal, crea su enlace en `~/.local/bin` e inicializa `pyenv` en Bash.

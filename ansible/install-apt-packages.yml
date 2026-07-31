@@ -33,6 +33,7 @@
       - liblzma-dev
       - libzstd-dev
       - pyenv
+      - solaar
       - ubuntu-restricted-addons
       - wl-clipboard
 

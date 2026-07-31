@@ -1,0 +1,44 @@
+---
+- name: Configurar herramientas de desarrollo
+  hosts: localhost
+  connection: local
+
+  vars:
+    local_home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+    tfenv_dir: "{{ local_home }}/.tfenv"
+
+  tasks:
+    - name: Crear directorio local de binarios
+      ansible.builtin.file:
+        path: "{{ local_home }}/.local/bin"
+        state: directory
+        mode: "0755"
+      become: false
+
+    - name: Instalar o actualizar tfenv
+      ansible.builtin.git:
+        repo: https://github.com/tfutils/tfenv.git
+        dest: "{{ tfenv_dir }}"
+        depth: 1
+        version: master
+        update: true
+      become: false
+
+    - name: Exponer tfenv en el PATH local
+      ansible.builtin.file:
+        src: "{{ tfenv_dir }}/bin/tfenv"
+        dest: "{{ local_home }}/.local/bin/tfenv"
+        state: link
+        force: true
+      become: false
+
+    - name: Inicializar pyenv en Bash
+      ansible.builtin.blockinfile:
+        path: "{{ local_home }}/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED PYENV"
+        block: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          if command -v pyenv >/dev/null 2>&1; then
+            eval "$(pyenv init - bash)"
+          fi
+      become: false

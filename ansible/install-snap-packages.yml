@@ -16,6 +16,13 @@
         channel: latest/stable
         state: present
 
+    - name: Instalar OpenCode snap classic
+      community.general.snap:
+        name: opencode
+        channel: latest/stable
+        classic: true
+        state: present
+
     - name: Instalar Visual Studio Code snap classic
       community.general.snap:
         name: code

@@ -9,6 +9,7 @@ Fecha de revisión: 2026-06-13
 | Aplicación | Paquete | Versión detectada | Canal | Notas |
 | --- | --- | --- | --- | --- |
 | Bitwarden | `bitwarden` | `2026.4.0` | `latest/stable` | Gestor de contraseñas |
+| OpenCode | `opencode` | Gestionada por Snap | `latest/stable` | Agente de código; usa confinamiento `classic` |
 | Visual Studio Code | `code` | `1b50d58d` | `latest/stable` | Instalado con confinamiento `classic` |
 
 ## Paquetes APT / DEB
@@ -20,12 +21,6 @@ Fecha de revisión: 2026-06-13
 | Git | `git` | `1:2.53.0-1ubuntu1` | Control de versiones; instalado antes de GitHub CLI |
 | GitHub CLI | `gh` | `2.46.0-4` | CLI de GitHub, disponible en repositorio Ubuntu `universe` |
 | Ubuntu restricted addons | `ubuntu-restricted-addons` | `32` | Códecs/complementos multimedia restringidos |
-
-## Instalaciones fuera de APT/Snap
-
-| Herramienta | Ruta detectada | Versión detectada | Notas |
-| --- | --- | --- | --- |
-| opencode | `~/.opencode/bin/opencode` | `1.17.4` | Instalado con `curl -fsSL https://opencode.ai/install \| bash`; requiere `curl` previamente |
 
 ## Notas
 

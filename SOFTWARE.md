@@ -2,27 +2,41 @@
 
 Inventario de software instalado manualmente para convertirlo más adelante en automatización reproducible.
 
-Fecha de revisión: 2026-06-13
+Fecha de revisión: 2026-07-31
 
 ## Aplicaciones Snap
 
 | Aplicación | Paquete | Versión detectada | Canal | Notas |
 | --- | --- | --- | --- | --- |
 | Bitwarden | `bitwarden` | `2026.4.0` | `latest/stable` | Gestor de contraseñas |
-| OpenCode | `opencode` | Gestionada por Snap | `latest/stable` | Agente de código; usa confinamiento `classic` |
-| Visual Studio Code | `code` | `1b50d58d` | `latest/stable` | Instalado con confinamiento `classic` |
+| OpenCode | `opencode` | `1.18.8` | `latest/stable` | Agente de código con componente de escritorio; usa confinamiento `classic` |
+| Termius | `termius-app` | `9.42.2` | `latest/stable` | Cliente SSH |
+| Visual Studio Code | `code` | `1b6a1881` | `latest/stable` | Instalado con confinamiento `classic` |
 
-## Paquetes APT / DEB
+## Paquetes de repositorios APT de Ubuntu
 
 | Aplicación | Paquete | Versión detectada | Notas |
 | --- | --- | --- | --- |
-| Google Chrome | `google-chrome-stable` | `149.0.7827.114-1` | Instalado desde `.deb` o repositorio externo; actualmente solo aparece en `/var/lib/dpkg/status` |
-| curl | `curl` | `8.18.0-1ubuntu2.1` | Herramienta CLI HTTP |
+| Ansible | `ansible` | `13.1.0+dfsg-1ubuntu1` | Automatización de este repositorio |
+| curl | `curl` | `8.18.0-1ubuntu2.3` | Herramienta CLI HTTP |
 | Git | `git` | `1:2.53.0-1ubuntu1` | Control de versiones; instalado antes de GitHub CLI |
 | GitHub CLI | `gh` | `2.46.0-4` | CLI de GitHub, disponible en repositorio Ubuntu `universe` |
+| Ghostty | `ghostty` | `1.3.0~us1-0ubuntu1` | Terminal que permite copiar y pegar texto a mi estilo y dentro de opencode |
 | Ubuntu restricted addons | `ubuntu-restricted-addons` | `32` | Códecs/complementos multimedia restringidos |
+| wl-clipboard | `wl-clipboard` | `2.2.1-2build1` | Portapapeles Wayland para OpenCode |
+
+## Paquetes de repositorios APT externos
+
+| Aplicación | Paquete | Versión detectada | Origen |
+| --- | --- | --- | --- |
+| Google Chrome | `google-chrome-stable` | `151.0.7922.71-1` | Repositorio oficial de Google |
+
+## Instalaciones desde archivos oficiales
+
+| Aplicación | Comando | Versión detectada | Origen |
+| --- | --- | --- | --- |
+| Google Antigravity IDE | `antigravity-ide` | `1.107.0` | Archivo oficial de Google para Linux x64 |
 
 ## Notas
 
-- Separar instalaciones por método: `apt`, `snap`, instalador externo y configuración de usuario.
-- Para Chrome conviene automatizar la instalación del repositorio oficial o documentar la descarga del `.deb`.
+- Separar instalaciones por origen: Snap, repositorios APT de Ubuntu, repositorios APT externos y archivos oficiales.

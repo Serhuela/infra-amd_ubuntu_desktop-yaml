@@ -23,6 +23,15 @@
         classic: true
         state: present
 
+    - name: Comprobar componente de escritorio de OpenCode
+      ansible.builtin.command: snap component opencode+desktop
+      register: opencode_desktop_component
+      changed_when: false
+
+    - name: Instalar componente de escritorio de OpenCode
+      ansible.builtin.command: snap install opencode+desktop
+      when: "'installed:' not in opencode_desktop_component.stdout"
+
     - name: Instalar Visual Studio Code snap classic
       community.general.snap:
         name: code

@@ -1,0 +1,83 @@
+---
+- name: Instalar Google Antigravity IDE localmente
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars:
+    antigravity_ide_version: "2.1.1"
+    antigravity_ide_build: "6123990880747520"
+    antigravity_ide_archive_url: "https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/{{ antigravity_ide_version }}-{{ antigravity_ide_build }}/linux-x64/Antigravity%20IDE.tar.gz"
+    antigravity_ide_install_dir: "/opt/antigravity-ide-{{ antigravity_ide_version }}"
+    antigravity_ide_archive: "/tmp/antigravity-ide-{{ antigravity_ide_version }}.tar.gz"
+
+  tasks:
+    - name: Comprobar arquitectura compatible
+      ansible.builtin.assert:
+        that: ansible_facts["architecture"] == "x86_64"
+        fail_msg: Google Antigravity IDE se distribuye aqui solo para Linux x64.
+
+    - name: Comprobar si esta instalada la version solicitada
+      ansible.builtin.stat:
+        path: "{{ antigravity_ide_install_dir }}/antigravity-ide"
+      register: antigravity_ide_binary
+
+    - name: Descargar archivo oficial de Google Antigravity IDE
+      ansible.builtin.get_url:
+        url: "{{ antigravity_ide_archive_url }}"
+        dest: "{{ antigravity_ide_archive }}"
+        owner: root
+        group: root
+        mode: "0644"
+      when: not antigravity_ide_binary.stat.exists
+
+    - name: Crear directorio de instalacion versionado
+      ansible.builtin.file:
+        path: "{{ antigravity_ide_install_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Extraer Google Antigravity IDE
+      ansible.builtin.unarchive:
+        src: "{{ antigravity_ide_archive }}"
+        dest: "{{ antigravity_ide_install_dir }}"
+        remote_src: true
+        extra_opts:
+          - --strip-components=1
+        creates: "{{ antigravity_ide_install_dir }}/antigravity-ide"
+
+    - name: Eliminar archivo temporal de Google Antigravity IDE
+      ansible.builtin.file:
+        path: "{{ antigravity_ide_archive }}"
+        state: absent
+
+    - name: Enlazar la version activa de Google Antigravity IDE
+      ansible.builtin.file:
+        src: "{{ antigravity_ide_install_dir }}"
+        dest: /opt/antigravity-ide
+        state: link
+
+    - name: Crear comando antigravity-ide
+      ansible.builtin.file:
+        src: /opt/antigravity-ide/bin/antigravity-ide
+        dest: /usr/local/bin/antigravity-ide
+        state: link
+
+    - name: Crear lanzador de Google Antigravity IDE
+      ansible.builtin.copy:
+        dest: /usr/share/applications/antigravity-ide.desktop
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Desktop Entry]
+          Name=Google Antigravity IDE
+          Comment=IDE de Google con asistencia de IA
+          Exec=/opt/antigravity-ide/antigravity-ide %F
+          Icon=/opt/antigravity-ide/resources/app/resources/linux/code.png
+          Terminal=false
+          Type=Application
+          Categories=Development;IDE;
+          StartupWMClass=Antigravity IDE

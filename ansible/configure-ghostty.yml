@@ -1,0 +1,25 @@
+---
+- name: Configurar Ghostty
+  hosts: localhost
+  connection: local
+
+  vars:
+    local_home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+
+  tasks:
+    - name: Crear directorio de configuracion de Ghostty
+      ansible.builtin.file:
+        path: "{{ local_home }}/.config/ghostty"
+        state: directory
+        mode: "0755"
+      become: false
+
+    - name: Configurar portapapeles de Ghostty
+      ansible.builtin.blockinfile:
+        path: "{{ local_home }}/.config/ghostty/config"
+        create: true
+        marker: "# {mark} ANSIBLE MANAGED GHOSTTY CLIPBOARD"
+        block: |
+          copy-on-select = clipboard
+          right-click-action = paste
+      become: false

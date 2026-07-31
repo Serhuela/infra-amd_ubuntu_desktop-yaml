@@ -10,7 +10,9 @@
       - curl
       - git
       - gh
+      - ghostty
       - ubuntu-restricted-addons
+      - wl-clipboard
 
   tasks:
     - name: Actualizar paquetes APT instalados
